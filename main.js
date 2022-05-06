@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 
 const app = express();
 
+const allRoutes = require("./src/routes/index");
+
 //connect to mongodb
 mongoose
   .connect(`${process.env.MongoDB}`, {
@@ -18,11 +20,13 @@ mongoose
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send(
     "welcome to my hospital api , we provide booking for doctors and patients"
   );
 });
+
+app.use("/api", allRoutes);
 
 const port = process.env.PORT || 6969;
 app.listen(port, () => {

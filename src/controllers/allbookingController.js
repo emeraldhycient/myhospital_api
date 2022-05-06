@@ -14,3 +14,5 @@ const allbookingController = (req, res) => {
       });
     });
 };
+
+module.exports = allbookingController;
