@@ -3,6 +3,7 @@ const booking = require("../models/booking");
 const bookingController = (req, res) => {
   const { name, email, complains, date, time, hospital_name, hospital_id } =
     req.body;
+  console.log(req.body);
   if (
     !name ||
     !email ||
@@ -12,8 +13,10 @@ const bookingController = (req, res) => {
     !hospital_name ||
     !hospital_id
   ) {
-    res.status(400).json({
+    return res.status(400).json({
+      status: "fail",
       message: "please fill all the fields",
+      data: { name, email, complains, date, time, hospital_name, hospital_id },
     });
   }
 
@@ -30,13 +33,15 @@ const bookingController = (req, res) => {
   newBooking
     .save()
     .then((data) => {
-      res.status(200).json({
+      return res.status(200).json({
+        status: "success",
         message: "booking successful",
         data: newBooking,
       });
     })
     .catch((err) => {
       res.status(400).json({
+        status: "fail",
         message: "booking failed",
       });
     });
